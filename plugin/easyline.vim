@@ -5,10 +5,6 @@ else
 endif
 
 if !exists('g:easyline_left_items')
-    let g:easyline_theme_loaded = 0
-endif
-
-if !exists('g:easyline_left_items')
     let g:easyline_Left_items = ['windownumber','filename','modified']
 endif
 
@@ -28,28 +24,29 @@ if !exists('g:easyline_exclude')
     let g:easyline_exclude = []
 endif
 
+if !exists('g:easyline_update_throttle')
+    let g:easyline_update_throttle = 20
+endif
+
+let g:easyline_update_timer = -1
+
 function! easyline#SetTheme(name) abort
     try
         let l:theme     = a:name ==# '' ? get(g:, 'colors_name', 'default') : a:name
         let l:fn_name   = substitute('easyline#themes#' . l:theme . '#get','-','_','g')
         let l:colors    = call(function(l:fn_name),[])
+        let fg          = get(l:colors, 'foreground', '#ffffff')
+        let mid         = get(l:colors, 'middle', '#ffffff')
 
         for i in range(1, 7)
-            if has_key(l:colors, 'itemLeft' . i)
-                execute 'highlight EasylineItemLeft' . i . 
-                      \ ' guifg=' . get(l:colors, 'foreground', '#ffffff') . 
-                      \ ' guibg=' . l:colors['itemLeft' . i]
-            endif
-            if has_key(l:colors, 'itemRight' . i)
-                execute 'highlight EasylineItemRight' . i . 
-                      \ ' guifg=' . get(l:colors, 'foreground', '#ffffff') . 
-                      \ ' guibg=' . l:colors['itemRight' . i]
-            endif
+            for side in ['Left','Right']
+                let bg = get(l:colors, 'item' .side . i, '#ffffff')
+                execute 'highlight EasylineItem' . side . i . ' guifg=' . fg . ' guibg=' . bg
+            endfor
         endfor
 
-        if has_key(l:colors, 'middle')
-            execute 'highlight EasylineItemSpacer guifg=' . get(l:colors, 'foreground', '#ffffff') . ' guibg=' . l:colors['middle']
-        endif
+        execute 'highlight EasylineItemSpacer guifg=' . fg . ' guibg=' . mid
+
     catch /.*/
         echo 'Easyline: Error while setting theme : ' . v:exception
     endtry

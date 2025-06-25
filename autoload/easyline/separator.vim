@@ -1,8 +1,7 @@
 function! easyline#separator#Highlight(value,side,idx) abort
     try
         let hl_str  =  easyline#highlight#String('Separator'.win_getid(),a:side,a:idx + 1) 
-        let hl_str .= a:value
-        return hl_str
+        return hl_str . a:value
     catch /.*/
         throw 'Error while retrieving item value'
     endtry
@@ -17,4 +16,8 @@ function! easyline#separator#Set(val,side,idx) abort
     catch /.*/
         throw 'Easyline: ' . v:exception
     endtry
+endfunction
+
+function!easyline#separator#Get(side) abort
+    return copy(get(g:, 'easyline_' . a:side . '_separator', []))
 endfunction

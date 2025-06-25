@@ -2,6 +2,10 @@ function! easyline#highlight#Constant(highlight,section, idx) abort
     return printf('Easyline%s%s%d',a:highlight, a:section, a:idx)
 endfunction
 
+function! easyline#highlight#Build(arr) abort
+    return join(a:arr,'')
+endfunction
+
 function! easyline#highlight#Value(highlight,section,idx,type)
     try
         let hl_str = easyline#highlight#Constant(a:highlight,a:section,a:idx)
