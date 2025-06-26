@@ -17,6 +17,16 @@ function! easyline#item#Highlight(value,section,idx) abort
     endtry
 endfunction
 
-function!easyline#item#Get(side) abort
-    return copy(get(g:, 'easyline_' . a:side . '_items', []))
+function!easyline#item#Get(side,status) abort
+    let items = copy(get(g:, 'easyline_' . a:side . '_'. a:status . '_items', []))
+    return a:side == 'right' ? reverse(items) : items
+endfunction
+
+function! easyline#Reverse(side,arr) abort
+    try
+	    if a:side == 'right' | call reverse(a:arr) | endif
+	    return a:arr
+    catch /.*/
+        echoerr 'ERROR | easyline#Reverse() | ' . v:exception
+    endtry
 endfunction

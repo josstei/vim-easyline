@@ -1,10 +1,9 @@
-function! easyline#Get() abort
-      try
-        let winid       = win_getid()
-        let cur_winid   = win_getid()
-
+function! easyline#Get(active) abort
+    try
+        let winid     = win_getid()
+        let cur_winid = win_getid()
         if win_gotoid(winid)
-            let status = easyline#Build()
+            let status =  easyline#Build(a:active) 
             call win_gotoid(cur_winid)
             return status
         endif
@@ -13,55 +12,34 @@ function! easyline#Get() abort
     endtry
 endfunction
 
-function! easyline#Section(side) abort
-    try
-        let arr_section = []
-        let items       = easyline#Reverse(a:side,easyline#item#Get(a:side))
-        let separator   = easyline#separator#Get(a:side)
-        let totalItems  = len(items)
-        let curwinid    = win_getid()
-
-        for idx in range(0, totalItems - 1)
-            let value = easyline#item#Value(items[idx])
-            if value != ''
-                let item_next   = (idx + 1 < totalItems) ? easyline#item#Value(items[idx + 1]) : ''
-                let hl_item     = easyline#item#Highlight(value,a:side,idx)
-                let hl_sep      = easyline#separator#Highlight(separator,a:side,idx)
-                let item        = easyline#highlight#Build(easyline#Reverse(a:side,[hl_item,hl_sep]))
-
-                call easyline#separator#Set(item_next,a:side,idx)
-                call add(arr_section,item)
-            endif
-        endfor
-
-        return join(easyline#Reverse(a:side,arr_section),'')
-    catch /.*/
-        echoerr 'ERROR | easyline#Section() | ' . v:exception
-    endtry
-endfunction
-
- function! easyline#Reverse(side,arr) abort
+function! easyline#Reverse(side,arr) abort
     try
 	    if a:side == 'right' | call reverse(a:arr) | endif
 	    return a:arr
-     catch /.*/
+    catch /.*/
         echoerr 'ERROR | easyline#Reverse() | ' . v:exception
-     endtry
- endfunction
+    endtry
+endfunction
 
- function! easyline#Build()
-     try
-         return easyline#Section('Left') . '%=' . easyline#Section('Right')
-     catch /.*/
-        echoerr 'ERROR | easyline#Build() | ' . v:exception
-     endtry
- endfunction
+function! easyline#Build(status) abort
+    let statusline = [] 
+    for side in ['Left','Right']
+        let items       = easyline#item#Get(side,a:status)
+        let separator   = easyline#separator#Get(side)
+        let section     = easyline#section#Get(items,separator,side)
+
+        call add(statusline,join(easyline#Reverse(side,section),''))
+    endfor
+    return join(statusline,'%=')
+endfunction
 
 function! easyline#Update() abort
+    let cur_winid = win_getid()
     for t in range(1, tabpagenr('$'))
         for w in range(1, tabpagewinnr(t, '$'))
             let winid = win_getid(w, t)
-            call win_execute(winid, 'let &l:statusline = easyline#Get()')
+            let is_active = (winid == cur_winid) ? 'active' : 'inactive'
+            call win_execute(winid, 'let &l:statusline = easyline#Get("' . (is_active) . '")')
         endfor
     endfor
 endfunction

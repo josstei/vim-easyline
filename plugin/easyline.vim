@@ -4,24 +4,32 @@ else
     let g:easyline_loaded= 1
 endif
 
-if !exists('g:easyline_left_items')
-    let g:easyline_Left_items = ['windownumber','filename','modified']
+if !exists('g:easyline_Left_active_items')
+    let g:easyline_Left_active_items = ['windownumber','filename','modified']
 endif
 
-if !exists('g:easyline_left_separator')
+if !exists('g:easyline_Left_inactive_items')
+    let g:easyline_Left_inactive_items = ['windownumber','filename','modified']
+endif
+
+if !exists('g:easyline_Left_separator')
     let g:easyline_Left_separator = ''
 endif
 
-if !exists('g:easyline_right_items')
-    let g:easyline_Right_items = ['position','filetype','encoding']
+if !exists('g:easyline_Right_active_items')
+    let g:easyline_Right_active_items = ['position','filetype','encoding']
 endif
 
-if !exists('g:easyline_right_separator')
+if !exists('g:easyline_Right_inactive_items')
+    let g:easyline_Right_inactive_items = ['position','filetype','encoding']
+endif
+
+if !exists('g:easyline_Right_separator')
     let g:easyline_Right_separator = ''
 endif
 
-if !exists('g:easyline_exclude')
-    let g:easyline_exclude = []
+if !exists('g:easyline_buffer_exclude')
+    let g:easyline_buffer_exclude = []
 endif
 
 if !exists('g:easyline_update_throttle')
