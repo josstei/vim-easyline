@@ -6,7 +6,7 @@ function! easyline#section#Get(items,separator,side) abort
         for idx in range(0, totalItems - 1)
             let item = easyline#item#Value(a:items[idx])
             if item != ''
-                let item_next   = (idx + 1 < totalItems) ? easyline#item#Value(a:items[idx + 1]) : ''
+                let item_next   = easyline#item#Next(idx,a:items) 
 
                 let hl_item     = easyline#item#Highlight(item,a:side,idx)
                 let hl_sep      = easyline#separator#Highlight(a:separator,a:side,idx)
@@ -28,3 +28,4 @@ function easyline#section#BuildHighlightStr(type,side) abort
     let l:func  = 'easyline#'.a:val.'#Highlight'
     let l:val   = call(function(l:func), [])
 endfunction
+

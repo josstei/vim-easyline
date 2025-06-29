@@ -4,28 +4,28 @@ else
     let g:easyline_loaded= 1
 endif
 
-if !exists('g:easyline_Left_active_items')
-    let g:easyline_Left_active_items = ['windownumber','filename','modified']
+if !exists('g:easyline_left_active_items')
+    let g:easyline_left_active_items = ['windownumber','filename','modified']
 endif
 
-if !exists('g:easyline_Left_inactive_items')
-    let g:easyline_Left_inactive_items = ['windownumber','filename','modified']
+if !exists('g:easyline_left_inactive_items')
+    let g:easyline_left_inactive_items = ['windownumber','filename','modified']
 endif
 
-if !exists('g:easyline_Left_separator')
-    let g:easyline_Left_separator = ''
+if !exists('g:easyline_left_separator')
+    let g:easyline_left_separator = ''
 endif
 
-if !exists('g:easyline_Right_active_items')
-    let g:easyline_Right_active_items = ['position','filetype','encoding']
+if !exists('g:easyline_right_active_items')
+    let g:easyline_right_active_items = ['position','filetype','encoding']
 endif
 
-if !exists('g:easyline_Right_inactive_items')
-    let g:easyline_Right_inactive_items = ['position','filetype','encoding']
+if !exists('g:easyline_right_inactive_items')
+    let g:easyline_right_inactive_items = ['position','filetype','encoding']
 endif
 
-if !exists('g:easyline_Right_separator')
-    let g:easyline_Right_separator = ''
+if !exists('g:easyline_right_separator')
+    let g:easyline_right_separator = ''
 endif
 
 if !exists('g:easyline_buffer_exclude')
@@ -53,7 +53,8 @@ function! easyline#SetTheme(name) abort
             endfor
         endfor
 
-        execute 'highlight EasylineItemSpacer guifg=' . fg . ' guibg=' . mid
+"         execute 'highlight EasylineItemSpacer guifg=' . fg . ' guibg=' . mid
+"         let g:easyline_separator_default = 
 
     catch /.*/
         echo 'Easyline: Error while setting theme : ' . v:exception
@@ -61,9 +62,9 @@ function! easyline#SetTheme(name) abort
 endfunction
 
 augroup easyline_update
-        autocmd!
-        autocmd ColorScheme * call easyline#SetTheme('') | call easyline#Update()
-        autocmd VimEnter,BufEnter,WinEnter * call easyline#SetTheme('') | call easyline#Update()
-        autocmd BufLeave,WinLeave * call easyline#Update()
-        autocmd CursorMoved,CursorMovedI * call easyline#ThrottledUpdate()
+    autocmd!
+    autocmd ColorScheme * call easyline#SetTheme('') | call easyline#Update()
+    autocmd VimEnter,BufEnter,WinEnter * call easyline#SetTheme('') | call easyline#Update()
+    autocmd BufLeave,WinLeave * call easyline#Update()
+    autocmd CursorMoved,CursorMovedI * call easyline#ThrottledUpdate()
 augroup END
