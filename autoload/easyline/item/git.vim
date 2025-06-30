@@ -1,19 +1,23 @@
+let s:git_stats = ''
 let s:git_branch = ''
-let s:git_diff   = ''
 
-function! jostline#git#refresh_git_stats() abort
+function! easyline#item#git#get() abort
+	return s:git_stats
+endfunction
+
+function! s:refresh() abort
 	let root = finddir('.git', expand('%:p:h').' ;')
-	if empty(root) | return | endif
+	if empty(root) | let s:git_stats = '' | return | endif
 	let cwd = fnamemodify(root, ':h')
-    call s:execute_job(['git', '-C', cwd, 'rev-parse', '--abbrev-ref', 'HEAD'], function('s:on_branch'))
+    call s:execute_job(['git', '-C', cwd, 'rev-parse', '--abbrev-ref', 'HEAD'], function('s:getBranch'))
     call s:execute_job(['git', '-C', cwd, 'diff', '--shortstat'], function('s:on_diff'))
 endfunction
 
-function! s:on_branch(...) abort
-  let data = s:get_job_data(a:000)
-  if !empty(data) && data[0] !=# ''
-    let s:git_branch = data
-  endif
+function! s:getBranch(...) abort
+    let data = s:get_job_data(a:000)
+    if !empty(data) && data[0] !=# ''
+        let s:git_branch = data
+    endif
 endfunction
 
 function! s:on_diff(...) abort
@@ -26,11 +30,7 @@ function! s:on_diff(...) abort
   let del = matchstr(stats, '\d\+\s\+deletion')
   let plus = ins !=# '' ? '+'.matchstr(ins, '\d\+') : ''
   let minus = del !=# '' ? '-'.matchstr(del, '\d\+') : ''
-  let s:git_diff = '  '.s:git_branch.' '.plus.' '.minus
-endfunction
-
-function! jostline#git#get_git_stats() abort
-	return s:git_diff
+  let s:git_stats = '  '.s:git_branch.' '.plus.' '.minus
 endfunction
 
 function! s:execute_job(cmd, cb) abort
@@ -71,3 +71,7 @@ function! s:get_job_data(args) abort
     endtry
 endfunction
 
+augroup easyline_git 
+	autocmd!
+	autocmd VimEnter,BufWritePost,BufReadPost * call s:refresh()
+augroup END

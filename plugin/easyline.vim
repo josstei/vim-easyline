@@ -13,7 +13,7 @@ if !exists('g:easyline_left_inactive_items')
 endif
 
 if !exists('g:easyline_left_separator')
-    let g:easyline_left_separator = ''
+    let g:easyline_left_separator = '█'
 endif
 
 if !exists('g:easyline_right_active_items')
@@ -25,7 +25,7 @@ if !exists('g:easyline_right_inactive_items')
 endif
 
 if !exists('g:easyline_right_separator')
-    let g:easyline_right_separator = ''
+    let g:easyline_right_separator = '█'
 endif
 
 if !exists('g:easyline_buffer_exclude')

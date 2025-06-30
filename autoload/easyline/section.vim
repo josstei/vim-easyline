@@ -7,7 +7,6 @@ function! easyline#section#Get(items,separator,side) abort
             let item = easyline#item#Value(a:items[idx])
             if item != ''
                 let item_next   = easyline#item#Next(idx,a:items) 
-
                 let hl_item     = easyline#item#Highlight(item,a:side,idx)
                 let hl_sep      = easyline#separator#Highlight(a:separator,a:side,idx)
                 
