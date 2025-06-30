@@ -30,8 +30,8 @@ function! s:on_diff(_, data, ...) abort
     endif
 
     let stats = a:data[0]
-    let plus  = matchstr(stats, '\v(\d+)\s+insertion') !=# '' ? '+' . matchstr(stats, '\v(\d+)\s+insertions', 1, 1) : ''
-    let minus = matchstr(stats, '\v(\d+)\s+deletion') !=# '' ? '-' . matchstr(stats, '\v(\d+)\s+deletions', 1, 1) : ''
+    let plus  = matchstr(stats, '\v(\d+)\s+insertion') !=# '' ? '+' . matchstr(stats, '\v(\d+)\s+', 1, 1) : ''
+    let minus = matchstr(stats, '\v(\d+)\s+deletion') !=# '' ? '-' . matchstr(stats, '\v(\d+)\s+', 1, 1) : ''
     let s:git_stats = '  ' . s:git_branch . ' ' . plus . ' ' . minus
 endfunction
 

@@ -2,28 +2,28 @@ function! easyline#section#Get(items, separator, side) abort
     try
         let arr_section = []
         let totalItems  = len(a:items)
-
         for idx in range(0, totalItems - 1)
             let item = easyline#item#Value(a:items[idx])
             if item != ''
-                let item_next = ''
+                let next_idx = -1
                 for j in range(idx + 1, totalItems - 1)
-                    let candidate = easyline#item#Value(a:items[j])
-                    if candidate != ''
-                        let item_next = candidate
+                    if easyline#item#Value(a:items[j]) != ''
+                        let next_idx = j
                         break
                     endif
                 endfor
 
                 let hl_item = easyline#item#Highlight(item, a:side, idx)
-                let hl_sep  = easyline#separator#Highlight(a:separator, a:side, idx)
+                let hl_sep  = easyline#separator#Highlight(
+                      \ a:separator,
+                      \ a:side,
+                      \ idx,
+                      \ next_idx
+                      \ )
                 let str = easyline#highlight#Build(easyline#Reverse(a:side, [hl_item, hl_sep]))
-
-                call easyline#separator#Set(item_next, a:side, idx)
                 call add(arr_section, str)
             endif
         endfor
-
         return arr_section
     catch /.*/
         echoerr 'ERROR | easyline#Section() | ' . v:exception
