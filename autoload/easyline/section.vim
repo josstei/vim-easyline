@@ -6,7 +6,6 @@ function! easyline#section#Get(items, separator, side) abort
         for idx in range(0, totalItems - 1)
             let item = easyline#item#Value(a:items[idx])
             if item != ''
-                " Find the next non-empty item
                 let item_next = ''
                 for j in range(idx + 1, totalItems - 1)
                     let candidate = easyline#item#Value(a:items[j])
