@@ -2,7 +2,7 @@ function! easyline#item#Value(item) abort
     try
         let l:func  = 'easyline#item#'. a:item . '#get'
         let l:val   = call(function(l:func), [])
-        return !empty(l:val) ? ' ' . l:val :  ''
+        return !empty(l:val) ? ' ' . l:val. ' ' :  ''
     catch /.*/
         return 'Error while retrieving item value'
     endtry
@@ -18,9 +18,15 @@ function! easyline#item#Highlight(value,section,idx) abort
 endfunction
 
 function! easyline#item#Get(side,status) abort
-    let l:side  = tolower(strpart(a:side, 0, 1)) . strpart(a:side, 1)
-    let l:items = copy(get(g:, 'easyline_' . l:side . '_'. a:status . '_items', []))
-    return a:side == 'right' ? reverse(items) : l:items
+    let l:side          = tolower(strpart(a:side, 0, 1)) . strpart(a:side, 1)
+    let l:file_override = 'easyline_' . l:side . '_' . a:status . '_items_' . &filetype
+
+    if exists('g:' . l:file_override)
+        let l:items = copy(get(g:, l:file_override, []))
+    else
+        let l:items = copy(get(g:, 'easyline_' . l:side . '_' . a:status . '_items', []))
+    endif
+    return a:side == 'right' ? reverse(l:items) : l:items
 endfunction
 
 function! easyline#Reverse(side,arr) abort

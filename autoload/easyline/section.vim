@@ -5,10 +5,10 @@ function! easyline#section#Get(items, separator, side) abort
         for idx in range(0, totalItems - 1)
             let item = easyline#item#Value(a:items[idx])
             if item != ''
-                let next_idx = -1
+                let idx_next = -1
                 for j in range(idx + 1, totalItems - 1)
                     if easyline#item#Value(a:items[j]) != ''
-                        let next_idx = j
+                        let idx_next = j
                         break
                     endif
                 endfor
@@ -18,7 +18,7 @@ function! easyline#section#Get(items, separator, side) abort
                       \ a:separator,
                       \ a:side,
                       \ idx,
-                      \ next_idx
+                      \ idx_next 
                       \ )
                 let str = easyline#highlight#Build(easyline#Reverse(a:side, [hl_item, hl_sep]))
                 call add(arr_section, str)

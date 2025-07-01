@@ -3,7 +3,7 @@ function! easyline#Get(active) abort
         let winid     = win_getid()
         let cur_winid = win_getid()
         if win_gotoid(winid)
-            let status =  easyline#Build(a:active) 
+            let status = easyline#Build(a:active) 
             call win_gotoid(cur_winid)
             return status
         endif

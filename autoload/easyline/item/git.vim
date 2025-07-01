@@ -5,12 +5,16 @@ function! easyline#item#git#get() abort
     return s:git_stats
 endfunction
 
+function! s:is_empty(data) abort
+    if empty(a:data)
+        let s:git_stats = ''
+        return 1 
+    endif
+endfunction
+
 function! s:refresh() abort
     let root = finddir('.git', expand('%:p:h').' ;')
-    if empty(root)
-        let s:git_stats = ''
-        return
-    endif
+    if s:is_empty(root) | return | endif
 
     let cwd = fnamemodify(root, ':h')
     call s:run_job(['git', '-C', cwd, 'rev-parse', '--abbrev-ref', 'HEAD'], function('s:on_branch'))
@@ -24,10 +28,7 @@ function! s:on_branch(_, data, ...) abort
 endfunction
 
 function! s:on_diff(_, data, ...) abort
-    if empty(a:data)
-        let s:git_stats = ''
-        return
-    endif
+    if s:is_empty(a:data) | return | endif
 
     let stats = a:data[0]
     let plus  = matchstr(stats, '\v(\d+)\s+insertion') !=# '' ? '+' . matchstr(stats, '\v(\d+)\s+', 1, 1) : ''
