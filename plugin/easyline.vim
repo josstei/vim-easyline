@@ -66,5 +66,6 @@ augroup easyline_update
     autocmd ColorScheme * call easyline#SetTheme('') | call easyline#Update()
     autocmd VimEnter,BufEnter,WinEnter * call easyline#SetTheme('') | call easyline#Update()
     autocmd BufLeave,WinLeave * call easyline#Update()
+    autocmd Filetype * call easyline#Update()
     autocmd CursorMoved,CursorMovedI * call easyline#ThrottledUpdate()
 augroup END
