@@ -2,8 +2,8 @@ function! easyline#item#git#job#Build(cwd,cmd) abort
     return join(['git -C', a:cwd, a:cmd],' ')
 endfunction
 
-function! easyline#item#git#job#Value(_, data, ...) abort
-    return !empty(a:data) && a:data[0] !=# '' ? a:data : []
+function! easyline#item#git#job#Validate(data) abort
+    return !empty(a:data) && a:data[0] !=# '' ? a:data[0] : []
 endfunction
 
 function! easyline#item#git#job#Run(cmd,cb) abort
