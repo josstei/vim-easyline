@@ -9,7 +9,7 @@ function! s:job_complete(_, data, ...) abort
     let l:file  = s:parse_stat_files(l:data)
     let l:plus  = s:parse_stat_lines(l:data,'insertions','+')
     let l:minus = s:parse_stat_lines(l:data,'deletions','-')
-    let s:value = join(filter([l:file, l:plus, l:minus], 'v:val !=# ""'), ' ')
+    let s:value = empty(l:data) ? '' : join(filter([l:file, l:plus, l:minus], 'v:val !=# ""'), ' ')
 endfunction
 
 function! s:job_refresh() abort

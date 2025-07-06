@@ -2,7 +2,7 @@ function! easyline#item#Value(item) abort
     try
         let l:func  = 'easyline#item#'. a:item . '#get'
         let l:val   = call(function(l:func), [])
-        return !empty(l:val) ? ' ' . l:val. ' ' :  ''
+        return !empty(trim(l:val)) ? ' ' . l:val. ' ' :  ''
     catch /.*/
         return 'Error while retrieving item value: ' . v:exception
     endtry
