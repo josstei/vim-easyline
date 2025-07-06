@@ -4,7 +4,7 @@ function! easyline#item#Value(item) abort
         let l:val   = call(function(l:func), [])
         return !empty(l:val) ? ' ' . l:val. ' ' :  ''
     catch /.*/
-        return 'Error while retrieving item value'
+        return 'Error while retrieving item value: ' . v:exception
     endtry
 endfunction
 

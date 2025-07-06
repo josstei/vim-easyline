@@ -4,10 +4,6 @@ function! easyline#item#gitdiff#get() abort
     return s:value    
 endfunction
 
-function! s:job_value() abort
-    return s:value
-endfunction
-
 function! s:job_complete(_, data, ...) abort
     let l:data  = easyline#item#git#job#Validate(a:data)
     let l:file  = s:parse_stat_files(l:data)
@@ -17,9 +13,7 @@ function! s:job_complete(_, data, ...) abort
 endfunction
 
 function! s:job_refresh() abort
-    let cwd     = easyline#item#git#repo#Get()
-    let s:job   = easyline#item#git#job#Build(cwd,'diff --shortstat')
-    call easyline#item#git#job#Run(s:job,function('s:job_complete'))
+    call easyline#item#git#job#Run('diff --shortstat',function('s:job_complete'))
 endfunction
 
 function! s:parse_stat_lines(data, word, symbol) abort

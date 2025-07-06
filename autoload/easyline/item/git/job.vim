@@ -1,5 +1,6 @@
-function! easyline#item#git#job#Build(cwd,cmd) abort
-    return join(['git -C', a:cwd, a:cmd],' ')
+function! easyline#item#git#job#Build(cmd) abort
+    let cwd = easyline#item#git#repo#Get()
+    return join(['git -C', cwd, a:cmd],' ')
 endfunction
 
 function! easyline#item#git#job#Validate(data) abort
@@ -7,15 +8,16 @@ function! easyline#item#git#job#Validate(data) abort
 endfunction
 
 function! easyline#item#git#job#Run(cmd,cb) abort
+    let job = easyline#item#git#job#Build(a:cmd)
     if exists('*job_start')
         let opts = {
               \ (has('nvim') ? 'on_stdout' : 'out_cb') : a:cb,
               \ (has('nvim') ? 'on_stderr' : 'err_cb') : function('s:on_err'),
               \ (has('nvim') ? 'stdout_buffered' : 'out_mode'): has('nvim') ? v:true : 'nl'
               \ }
-        call job_start(a:cmd, opts)
+        call job_start(job, opts)
     else
-        call a:cb(0, split(system(a:cmd), "\n"), '')
+        call a:cb(0, split(system(job), "\n"), '')
     endif
 endfunction
 
