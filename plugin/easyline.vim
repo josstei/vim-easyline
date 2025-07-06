@@ -36,28 +36,41 @@ if !exists('g:easyline_update_throttle')
     let g:easyline_update_throttle = 20
 endif
 
+if !exists('g:easyline_default_theme')
+    let g:easyline_default_theme = 'default'
+endif
+
 let g:easyline_update_timer = -1
 
 function! easyline#SetTheme(name) abort
     try
-        let l:theme     = a:name ==# '' ? get(g:, 'colors_name', 'default') : a:name
-        let l:fn_name   = substitute('easyline#themes#' . l:theme . '#get','-','_','g')
-        let l:colors    = call(function(l:fn_name),[])
-        let fg          = get(l:colors, 'foreground', '#ffffff')
-        let mid         = get(l:colors, 'middle', '#ffffff')
+        let l:theme = a:name ==# '' ? get(g:, 'colors_name', g:easyline_default_theme) : a:name
+        
+        try
+            let l:fn_name   = substitute('easyline#themes#' . l:theme . '#get','-','_','g')
+            let l:colors = call(function(l:fn_name),[])
+        catch /.*/
+            echohl WarningMsg
+            echo 'Easyline: Theme "' . l:theme . '" not found, using default theme'
+            echohl None
+            let l:fn_name   = substitute('easyline#themes#' . g:easyline_default_theme . '#get','-','_','g')
+            let l:colors    = call(function(l:fn_name),[])
+        endtry
+        
+        let fg  = get(l:colors, 'foreground', '#d0d0d0')
+        let mid = get(l:colors, 'middle', '#505050')
 
         for i in range(1, 7)
             for side in ['Left','Right']
-                let bg = get(l:colors, 'item' .side . i, '#ffffff')
+                let bg = get(l:colors, 'item' .side . i, '#808080')
                 execute 'highlight EasylineItem' . side . i . ' guifg=' . fg . ' guibg=' . bg
             endfor
         endfor
 
-"         execute 'highlight EasylineItemSpacer guifg=' . fg . ' guibg=' . mid
-"         let g:easyline_separator_default = 
-
     catch /.*/
-        echo 'Easyline: Error while setting theme : ' . v:exception
+        echohl ErrorMsg
+        echo 'Easyline: Error while setting theme: ' . v:exception
+        echohl None
     endtry
 endfunction
 
