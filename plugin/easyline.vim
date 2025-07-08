@@ -50,9 +50,6 @@ function! easyline#SetTheme(name) abort
             let l:fn_name   = substitute('easyline#themes#' . l:theme . '#get','-','_','g')
             let l:colors = call(function(l:fn_name),[])
         catch /.*/
-            echohl WarningMsg
-            echo 'Easyline: Theme "' . l:theme . '" not found, using default theme'
-            echohl None
             let l:fn_name   = substitute('easyline#themes#' . g:easyline_default_theme . '#get','-','_','g')
             let l:colors    = call(function(l:fn_name),[])
         endtry
