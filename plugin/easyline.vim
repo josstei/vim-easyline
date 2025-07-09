@@ -44,10 +44,6 @@ if !exists('g:easyline_git_cache_timeout')
     let g:easyline_git_cache_timeout = 5000  " 5 seconds
 endif
 
-if !exists('g:easyline_git_enabled')
-    let g:easyline_git_enabled = 1
-endif
-
 let g:easyline_update_timer = -1
 
 function! easyline#SetTheme(name) abort
