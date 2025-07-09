@@ -8,7 +8,7 @@ endfunction
 
 function! s:job_complete(_, data, ...) abort
     let l:data  = easyline#item#git#job#Validate(a:data)
-    let s:value = empty(l:data) ? '' : '  ' . l:data
+    let s:value = empty(l:data) ? '' : '  ' . l:data
 endfunction
 
 function! s:job_refresh(...) abort
