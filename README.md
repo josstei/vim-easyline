@@ -2,7 +2,7 @@
 
 # vim-easyline
 
-A fast, lightweight, and highly customizable statusline plugin for Vim (compatible with Vim 8+ and Vim 9). vim-easyline enhances your Vim experience by providing dynamic, informative, and visually appealing statusline sections, git integration, extensive theming, and automatic colorscheme matching.
+A fast, lightweight, and highly customizable statusline plugin for Neovim/Vim (compatible with Vim 8+ and Vim 9). vim-easyline enhances your Vim experience by providing dynamic, informative, and visually appealing statusline sections, git integration, extensive theming, and automatic colorscheme matching.
 
 ---
 
