@@ -1,7 +1,7 @@
 if exists('g:easyline_loaded')
     finish
 else
-    let g:easyline_loaded= 1
+    let g:easyline_loaded = 1
 endif
 
 if !exists('g:easyline_left_active_items')
@@ -40,6 +40,14 @@ if !exists('g:easyline_default_theme')
     let g:easyline_default_theme = 'default'
 endif
 
+if !exists('g:easyline_git_cache_timeout')
+    let g:easyline_git_cache_timeout = 5000  " 5 seconds
+endif
+
+if !exists('g:easyline_git_enabled')
+    let g:easyline_git_enabled = 1
+endif
+
 let g:easyline_update_timer = -1
 
 function! easyline#SetTheme(name) abort
@@ -48,7 +56,7 @@ function! easyline#SetTheme(name) abort
         
         try
             let l:fn_name   = substitute('easyline#themes#' . l:theme . '#get','-','_','g')
-            let l:colors = call(function(l:fn_name),[])
+            let l:colors    = call(function(l:fn_name),[])
         catch /.*/
             let l:fn_name   = substitute('easyline#themes#' . g:easyline_default_theme . '#get','-','_','g')
             let l:colors    = call(function(l:fn_name),[])
