@@ -174,6 +174,7 @@ vim-easyline includes 10+ commonly used themes that automatically integrate with
 | **Theme**     | **Description**                                  |
 |---------------|--------------------------------------------------|
 | `default`     | Neutral grayscale theme (fallback)              |
+| `voidpulse`   | Deep space theme with bright vibrant accents      |
 | `material`    | Google Material Design colors                    |
 | `onedark`     | Atom One Dark inspired theme                    |
 | `gruvbox`     | Retro groove colors                              |
