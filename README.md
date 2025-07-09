@@ -191,4 +191,4 @@ vim-easyline includes 10+ commonly used themes that automatically integrate with
 
 ## 📝 License
 
-MIT – see [LICENSE.md](LICENSE.md) for details.
+MIT – see [LICENSE.md](LICENSE) for details.
