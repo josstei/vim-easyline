@@ -1,7 +1,7 @@
 function! easyline#themes#voidpulse#get()
     return {
         \ 'foreground': '#F8F8FF',
-        \ 'itemLeft1':  '#1B2142',
+        \ 'itemLeft1':  '#A97CFF',
         \ 'itemLeft2':  '#222850',
         \ 'itemLeft3':  '#2A305E',
         \ 'itemLeft4':  '#343A70',

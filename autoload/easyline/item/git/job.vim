@@ -98,6 +98,6 @@ endfunction
 
 function! s:on_err(job, data, event) abort
     if !empty(a:data) && len(filter(a:data, 'v:val !=# ""')) > 0
-        echom '[EASYLINE][GIT][ERROR]: ' . string(a:data)
+        " echo '[EASYLINE][GIT][ERROR]: ' . string(a:data)
     endif
 endfunction
